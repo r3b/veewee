@@ -1,0 +1,41 @@
+Veewee::Session.declare({
+  :os_type_id  => 'OpenSUSE_64',
+  :cpu_count   => '1',
+  :memory_size => '1024',
+  :disk_size   => '20480',
+  :disk_format => 'VDI',
+  :hostiocache => 'off',
+  :iso_file => "SLES-11-SP3-SAP-DVD-x86_64-GM-DVD.iso",
+  :iso_src  => "https://download.suse.com/sendredirect?target=http%3A%2F%2Fcdn.novell.com%2Fprot%2FXL0RqEykZpc%7E%2FSLE-11-SP3-SAP-DVD-x86_64-GM-DVD.iso%3F5bc3650926e7f0c7ef48580b7c5f13515ee43d7f1ef6a6119cf8237c60259689c7ef44d5db38e9deb037f5c0e7b48bd414780cecb8c76afe6e4d08058030d0682a1859&buildid=XL0RqEykZpc~&fileid=tCcYZZhq-yw~&mirror=AkamaiHost&nohost=false",
+  :iso_md5  => "6386275a54d0353706a4632977055d19",
+  :iso_download_timeout => "1000",
+  :boot_wait         => "10",
+  # :boot_cmd_sequence => [
+  #   '<Down><Down><Down><Tab>',
+  #   '<Backspace>' * 31,
+  #   'http://%IP%:%PORT%/autoinst.xml netdevice=eth0 netsetup=dhcp',
+  #   ' lang=en_US textmode=1',
+  #   '<Enter>'
+  # ],
+  :boot_cmd_sequence => [
+    '<Esc><Enter>',
+    'linux initrd=initrd ramdisk_size=65536',
+    ' netdevice=eth0 netsetup=dhcp',
+    ' lang=en_US autoyast=http://%IP%:%PORT%/autoinst.xml',
+    ' textmode=1',
+    '<Enter>'
+  ],
+  :kickstart_port    => "7122",
+  :kickstart_timeout => "300",
+  :kickstart_file    => ["autoinst.xml", "autoinst.xml"],
+  :ssh_login_timeout => "10000",
+  :ssh_user          => "vagrant",
+  :ssh_password      => "vagrant",
+  :ssh_key           => "",
+  :ssh_host_port     => "7222",
+  :ssh_guest_port    => "22",
+  :sudo_cmd     => "echo '%p'|sudo -S sh '%f'",
+  :shutdown_cmd => "/sbin/poweroff",
+  :postinstall_files   => ["postinstall.sh", "install_java_6.sh"],
+  :postinstall_timeout => "10000"
+})
